@@ -1,0 +1,104 @@
+{% comment %}
+  @param article
+      Blog article
+  @param show_date
+      show date posted
+      default false
+  @param show_author
+      show post author
+      default false
+  @param show_tags
+      show post tags
+      defualt false
+  @param show_excerpt
+      Show post excerpt
+      default false
+{% endcomment %}
+
+<article class="blog-article">
+  {% if show_date %}
+    <div class="blog-article__date">
+      {% if article %}
+        {{ article.published_at | date: format: 'long_month' }}
+      {% else %}
+        {{ "now" | time_tag: '%b %d, %Y' }}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <h3 class="blog-article__heading">
+    {% if article %}
+      <a href="{{ article.url }}" class="blog-article__heading-link">{{ article.title }}</a>
+    {% else %}
+      <a href="#" class="blog-article__heading-link">{{ 'onboarding.article.title' | t }}</a>
+    {% endif %}
+  </h3>
+
+  {% if show_author %}
+    <div class="blog-article__author">
+      {% if article %}
+        {{ 'blog.article.by_author' | t: author: article.author }}
+        {% if article.comments_enabled? %}
+          <span class="blog-article__comments">
+            — {{ 'blog.comment_count' | t: count: article.comments_count }}
+          </span>
+        {% endif %}
+      {% else %}
+        {{ 'onboarding.article.author' | t }}
+        {% if article.comments_enabled? %}
+          <span class="blog-article__comments">
+            — {{ 'blog.comment_count' | t: count: 0 }}
+          </span>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if article == blank or article.image %}
+    <div class="blog-article__image">
+      {% if article %}
+        <a href="{{ article.url }}">
+          {%
+            include 'rimg',
+            img: article.image,
+            size: '1024x1024',
+            lazy: true,
+            canvas: true
+          %}
+        </a>
+      {% else %}
+        <a href="#">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="blog-article__content">
+    {% if article %}
+      {{ article.excerpt_or_content }}
+    {% else %}
+      {{ 'onboarding.article.excerpt' | t }}
+    {% endif %}
+  </div>
+
+  <div class="blog-article__read-more">
+    <a href="{{ article.url }}" class="blog-article__read-more-link">
+      {{ 'blog.continue_reading' | t }}
+    </a>
+  </div>
+
+  {% if show_tags and article.tags.size > 0 %}
+    <div class="blog-article__tags">
+      {{ 'blog.tagged' | t }}
+      {% for tag in article.tags %}
+        <a
+          href="{{ blog.url }}/tagged/{{ tag | handle }}"
+          class="blog-article__tag"
+        >
+          {{ tag }}
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</article>
