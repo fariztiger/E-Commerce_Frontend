@@ -1,0 +1,85 @@
+<h1 class="page--title">{{ page.title }}</h1>
+
+<div
+    class="homepage-sections-wrapper homepage-sections-wrapper--white feature-row--no-overlapping content-width"
+    data-wetheme-section-type="image--image-with-text" data-wetheme-section-id="{{ section.id }}"
+  >
+    
+           
+                  <h2 class="homepage-sections--title">{{ article.title | escape }}</h2>
+             
+
+  <div
+    class="row-handle homepage-sections-wrapper homepage-sections-wrapper--white feature-row--no-overlapping content-width"
+    data-wetheme-section-type="image--image-with-text" data-wetheme-section-id="{{ section.id }}"
+  >
+
+      <div class="row-item homepage-indiv-section-wrapper grid--full homepage-featured-content-wrapper feature-row__text--left feature-row__text-alignment--center">
+          <div class="grid__item homepage-content--image homepage-content--{{ section.id }} large--one-half">
+            <div>
+                <div id="rellax--{{ section.id }}" class="img" data-rellax-percentage="0.5" data-rellax-speed="-6">
+                  {% render 'responsive-image' with article.image, img_tag: article.title, alt: article_alt | escape %}
+                </div>
+            </div>
+        </div>
+        <div class="grid__item feature_row__image_wrapper large--one-half">
+           <div class="homepage-featured-content-box-inner show-on-scroll">
+               <div class="rte featured-row__subtext textarea">{{ article.content }}</div>
+           </div>
+        </div>
+     </div>
+  </div>
+
+
+{% schema %}
+{
+    "name": {
+        "en": "Article-blog",
+        "de": "Article-blog",
+        "es": "Article-blog",
+        "fr": "Article-blog",
+        "pt-PT": "Article-blog"
+    },
+    "class": "image-with-text-wrapper",
+    "settings": [
+        
+    ],
+
+    "presets": [
+        {
+            "name": {
+                "en": "Button with link",
+                "de": "Button with link",
+                "es": "Button with link",
+                "fr": "Button with link",
+                "pt-PT": "Button with link"
+            },
+            "category": {
+                "en": "Link",
+                "de": "Link",
+                "es": "Link",
+                "fr": "Link",
+                "pt-PT": "Link"
+            }
+        },
+        {
+            "name": {
+                "en": "Article-blog",
+                "de": "Article-blog",
+                "es": "Article-blog",
+                "fr": "Article-blog",
+                "pt-PT": "Article-blog"
+            },
+            "category": {
+                "en": "Custom",
+                "de": "Custom",
+                "es": "Custom",
+                "fr": "Custom",
+                "pt-PT": "Custom"
+            }
+        }
+    ]
+}
+
+
+{% endschema %}

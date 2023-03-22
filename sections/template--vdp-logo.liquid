@@ -1,0 +1,405 @@
+{% case section.settings.colors %}
+  {% when 'white' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--white' -%}
+  {% when 'light' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--light' -%}
+  {% when 'accent' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--accent' -%}
+  {% when 'dark' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--dark' -%}
+{% endcase %}
+
+<div
+  class="homepage-sections-wrapper {{ color_scheme }}{% if section.settings.circle_images %} testimonial--circle-images{% endif %}"
+  data-wetheme-section-type="text--testimonials" data-wetheme-section-id="{{ section.id }}"
+>
+
+<div class="wrapper show-on-scroll">
+  
+  {% if section.settings.title != blank %}
+    <div class="sitewide--title-wrapper">
+      <h2 class="homepage-sections--title">{{ section.settings.title | escape }}</h2>
+    </div>
+  {% endif %}
+  
+  <br>
+  <br>
+
+  <div class="testimonials-block">
+
+    {% for block in section.blocks %}
+
+      <div class="quality--single-item" {{ block.shopify_attributes }}>
+
+        {% if block.settings.image != blank %}
+          <div class="quality-section--image quality--all-item">
+            {% if section.settings.circle_images %}
+              {% assign crop = 'center' %}
+            {% endif %}
+            {% assign img_alt =  block.settings.image.alt | default: shop.name %}
+            {% render 'responsive-image' with block.settings.image, alt: img_alt | escape crop: 'center', default_size: '100x100', force_height: 100, force_aspect: 1, allow_stretch: true %}
+          </div>
+        {% endif %}
+
+        {% if block.settings.principles_text != blank %}
+          <div class="testimonials--text-wrapper">
+            {{ block.settings.principles_text }}
+          </div>
+        {% endif %}
+
+
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+  <br>
+  <br>
+  <br>
+  
+<div class="wrapper show-on-scroll">
+
+	<div class="homepage-indiv-section-wrapper grid--full.homepage-featured-content-wrapper">
+
+		<div class="grid__item large--five-sixths push--large--one-twelfth homepage-featured-rich-text">
+
+			{% if section.settings.tradition_title != blank %}
+				<div class="sitewide--title-wrapper">
+        
+	        <h2 class="homepage-sections--title">{{ section.settings.tradition_title | escape }}</h2>
+	      </div>
+			{% endif %}
+
+			{% if section.settings.tradition_text != blank %}
+				<div class="rte featured-row__subtext textarea">{{ section.settings.tradition_text }}</div>
+			{% endif %}
+
+		</div>
+
+	</div>
+
+</div>
+
+  
+</div>
+
+{% schema %}
+{
+    "name": {
+        "en": "Leidenschaft Facts",
+        "de": "Leidenschaft Facts",
+        "es": "Leidenschaft Facts",
+        "fr": "Leidenschaft Facts",
+        "pt-PT": "Leidenschaft Facts"
+    },
+    "class": "homepage-section--testimonials-wrapper",
+    "settings": [
+		{
+            "type": "image_picker",
+            "id": "banner_image",
+            "label": {
+                "en": "Image",
+                "de": "Bild",
+                "es": "Imagen",
+                "fr": "Image",
+                "pt-PT": "Imagem"
+            },
+            "info": {
+                "en": "Recommended 2000px x 600px",
+                "de": "2000 px x 600 px empfohlen",
+                "es": "Recomendado: 2000px x 600px",
+                "fr": "2000 x 600 px recommandé",
+                "pt-PT": "2000px x 600px (recomendado)"
+            }
+        },
+        {
+            "type": "select",
+            "id": "banner-image-size",
+            "label": {
+                "en": "Image size",
+                "de": "Bildgröße",
+                "es": "Tamaño de la imagen",
+                "fr": "Taille de l'image",
+                "pt-PT": "Tamanho da imagem"
+            },
+            "options": [
+                {
+                    "value": "20vh",
+                    "label": {
+                        "en": "Small",
+                        "de": "Klein",
+                        "es": "Pequeño",
+                        "fr": "Petite",
+                        "pt-PT": "Pequeno"
+                    }
+                },
+                {
+                    "value": "30vh",
+                    "label": {
+                        "en": "Medium",
+                        "de": "Mittel",
+                        "es": "Mediano",
+                        "fr": "Moyenne",
+                        "pt-PT": "Médio"
+                    }
+                },
+                {
+                    "value": "40vh",
+                    "label": {
+                        "en": "Large",
+                        "de": "Groß",
+                        "es": "Grande",
+                        "fr": "Grande",
+                        "pt-PT": "Grande"
+                    }
+                },
+                {
+                    "value": "original",
+                    "label": {
+                        "en": "Original",
+                        "de": "Original",
+                        "es": "Original",
+                        "fr": "D'origine",
+                        "pt-PT": "Original"
+                    }
+                }
+            ],
+            "default": "20vh"
+        },
+        {
+            "type": "checkbox",
+            "id": "parallax",
+            "label": {
+                "en": "Enable parallax effect",
+                "de": "Parallaxeneffekt aktivieren",
+                "es": "Habilitar efecto de paralaje",
+                "fr": "Activer l'effet parallaxe",
+                "pt-PT": "Ativar efeito de paralaxe"
+            },
+            "default": true,
+            "info": {
+                "en": "Parallax won't be visible when the 'Image size' is set to 'Original'",
+                "de": "Parallax wird nicht angezeigt, wenn die 'Bildgröße' auf 'Original' eingestellt ist",
+                "es": "Parallax no estará visible cuando el 'Tamaño de la imagen' esté establecido como 'Original'",
+                "fr": "La parallaxe ne sera pas visible lorsque la 'Taille de l'image' sera réglée sur 'D'origine'.",
+                "pt-PT": "A paralaxe não será visível quando o \"Tamanho da imagem\" estiver definido como \"Original\""
+            }
+        },
+        {
+            "type": "text",
+            "id": "page_subtitle",
+            "label": {
+                "en": "Heading",
+                "de": "Überschrift",
+                "es": "Encabezado",
+                "fr": "Rubrique",
+                "pt-PT": "Título"
+            },
+            "default": {
+                "en": "Welcome to our store",
+                "de": "Willkommen in unserem Store",
+                "es": "Bienvenido a nuestra tienda",
+                "fr": "Bienvenue dans notre magasin",
+                "pt-PT": "Bem-vindo/a à nossa loja"
+            }
+        },
+        {
+            "type": "richtext",
+            "id": "page_description",
+            "label": {
+                "en": "Text",
+                "de": "Text",
+                "es": "Texto",
+                "fr": "Texte",
+                "pt-PT": "Texto"
+            },
+            "default": {
+                "en": "<p>Use this text block to introduce your customers to the straußwirtschaft.</p>",
+                "de": "<p>Verwenden Sie diesen Textblock, Besucher in Ihrer Straußwirtschaft willkommen zu heißen.</p>",
+                "es": "<p>Utilice este bloque de texto para mostrar avisos de la tienda, anunciar productos y colecciones o, simplemente, para dar la bienvenida a los visitantes. </p>",
+                "fr": "<p>Utilisez ce bloc de texte pour afficher les annonces en magasin, annoncer des produits et des collections ou simplement accueillir les visiteurs dans votre magasin. </p>",
+                "pt-PT": "<p>Utilize este bloco de texto para exibir anúncios da loja, publicitar produtos e coleções, ou apenas dar as boas-vindas às pessoas que visitam a sua loja.</p>"
+            }
+        },
+        {
+            "type": "select",
+            "id": "colors",
+            "label": {
+                "en": "Color scheme",
+                "de": "Farbschema",
+                "es": "Esquema de colores",
+                "fr": "Palette de couleurs",
+                "pt-PT": "Esquema de cores"
+            },
+            "default": "white",
+            "options": [
+                {
+                    "value": "white",
+                    "label": {
+                        "en": "Minimal",
+                        "fr": "Minimal",
+                        "de": "Minimal",
+                        "es": "Mínimo",
+                        "pt-PT": "Mínimo"
+                    }
+                },
+                {
+                    "value": "light",
+                    "label": {
+                        "en": "Light",
+                        "de": "Licht",
+                        "es": "Luz",
+                        "fr": "Clair",
+                        "pt-PT": "Claro"
+                    }
+                },
+                {
+                    "value": "accent",
+                    "label": {
+                        "en": "Feature",
+                        "de": "Eigenschaft",
+                        "es": "Destacado",
+                        "fr": "Caractéristique",
+                        "pt-PT": "Funcionalidade"
+                    }
+                },
+                {
+                    "value": "dark",
+                    "label": {
+                        "en": "Dark",
+                        "de": "Dunkel",
+                        "es": "Oscuro",
+                        "fr": "Foncé",
+                        "pt-PT": "Escuro"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": {
+                "en": "Heading",
+                "de": "Überschrift",
+                "es": "Encabezado",
+                "fr": "Rubrique",
+                "pt-PT": "Título"
+            },
+            "default": {
+                "en": "Prinzipien",
+                "de": "Prinzipien",
+                "es": "Prinzipien",
+                "fr": "Prinzipien",
+                "pt-PT": "Prinzipien"
+            }
+        },
+		{
+            "type": "text",
+            "id": "tradition_title",
+            "label": {
+                "en": "Heading",
+                "de": "Überschrift",
+                "es": "Encabezado",
+                "fr": "Rubrique",
+                "pt-PT": "Título"
+            },
+            "default": {
+                "en": "Welcome to our store",
+                "de": "Willkommen in unserem Store",
+                "es": "Bienvenido a nuestra tienda",
+                "fr": "Bienvenue dans notre magasin",
+                "pt-PT": "Bem-vindo/a à nossa loja"
+            }
+        },
+        {
+            "type": "richtext",
+            "id": "tradition_text",
+            "label": {
+                "en": "Text",
+                "de": "Text",
+                "es": "Texto",
+                "fr": "Texte",
+                "pt-PT": "Texto"
+            },
+            "default": {
+                "en": "<p>Use this text block to show store announcements, advertise products and collections, or simply welcome visitors to your store.</p>",
+                "de": "<p>Verwenden Sie diesen Textblock, um Ankündigungen zu zeigen, Produkte und Kollektionen zu bewerben oder einfach Besucher in Ihrem Store willkommen zu heißen.</p>",
+                "es": "<p>Utilice este bloque de texto para mostrar avisos de la tienda, anunciar productos y colecciones o, simplemente, para dar la bienvenida a los visitantes. </p>",
+                "fr": "<p>Utilisez ce bloc de texte pour afficher les annonces en magasin, annoncer des produits et des collections ou simplement accueillir les visiteurs dans votre magasin. </p>",
+                "pt-PT": "<p>Utilize este bloco de texto para exibir anúncios da loja, publicitar produtos e coleções, ou apenas dar as boas-vindas às pessoas que visitam a sua loja.</p>"
+            }
+        }
+
+    ],
+    "max_blocks": 4,
+    "blocks": [
+        {
+            "type": "text",
+            "name": {
+                "en": "VDP Logo - Testimonial",
+                "de": "VDP Logo - Testimonial",
+                "es": "VDP Logo - Testimonial",
+                "fr": "VDP Logo - Testimonial",
+                "pt-PT": "VDP Logo - Testimonial"
+            },
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": {
+                        "en": "Image",
+                        "de": "Bild",
+                        "es": "Imagen",
+                        "fr": "Image",
+                        "pt-PT": "Imagem"
+                    },
+                    "info": {
+                        "en": "400px x 400px recommended",
+                        "de": "400 px x 400 px empfohlen",
+                        "es": "Recomendado: 400px x 400px",
+                        "fr": "400 x 400 px recommandé",
+                        "pt-PT": "400px x 400px (recomendado)"
+                    }
+                },
+                {
+                    "type": "richtext",
+                    "id": "principles_text",
+                    "label": {
+                        "en": "Text",
+                        "de": "Text",
+                        "es": "Texto",
+                        "fr": "Texte",
+                        "pt-PT": "Texto"
+                    }
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": {
+                "en": "Leidenschaft Facts",
+                "de": "Leidenschaft Facts",
+                "es": "Leidenschaft Facts",
+                "fr": "Leidenschaft Facts",
+                "pt-PT": "Leidenschaft Facts"
+            },
+            "category": {
+                "en": "Custom",
+                "de": "Custom",
+                "es": "Custom",
+                "fr": "Custom",
+                "pt-PT": "Custom"
+            },
+            "blocks": [
+                {
+                    "type": "text",
+                    "settings": {
+             
+                    }
+				}
+            ]
+        }
+    ]
+}
+{% endschema %}

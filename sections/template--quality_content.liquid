@@ -1,0 +1,537 @@
+<h1 class="page--title">{{ page.title }}</h1>
+
+
+
+
+<div
+  class="homepage-sections-wrapper homepage-sections-wrapper--{{ section.settings.colors }}"
+    data-wetheme-section-type="text--rich-text" data-wetheme-section-id="{{ section.id }}"
+>
+
+<div class="wrapper show-on-scroll">
+
+	<div class="homepage-indiv-section-wrapper grid--full.homepage-featured-content-wrapper">
+      
+      		<div class="grid__item large--five-sixths push--large--one-twelfth homepage-featured-rich-text">
+              
+                  {% if section.settings.page_subtitle != blank %}
+                      <div class="sitewide--title-wrapper">
+
+                  <h2 class="homepage-sections--title">{{ section.settings.page_subtitle | escape }}</h2>
+                </div>
+                  {% endif %}
+
+                  {% if section.settings.page_description != blank %}
+                      <div class="rte featured-row__subtext textarea strausswirtschaft-rich_text">{{ section.settings.page_description }}</div>
+                  {% endif %}
+              
+			</div>
+       
+             <div class="grid__item large--five-sixths push--large--one-twelfth homepage-featured-rich-text">
+              
+                 {% if section.settings.remove-spacing %}
+                  {% assign no-spacing = ' no-spacing' %}
+                {% else %}
+                  {% assign no-spacing = '' %}
+                {% endif %}
+
+
+                  {% assign no_images = true %}
+                  {% for block in section.blocks %}
+                    {% if block.settings.image != blank %}
+                      {% assign no_images = false %}
+                    {% endif %}
+                  {% endfor %}
+                  {% if section.settings.remove-spacing == false %}
+                    <div class="wrapper">
+                  {% endif %}
+                      <div class="homepage-gallery-background-strausswirtschaft homepage-gallery-background{% if section.settings.section-width == 'content' %} content-width-strausswirtschaft{% endif %}">
+                        {% if section.settings.title != blank or section.settings.richtext != blank %}
+                          <div class="wrapper">
+                            {% if section.settings.title != blank %}
+                              <div class="sitewide--title-wrapper">
+                                <h2 class="homepage-sections--title">{{ section.settings.title | escape }}</h2>
+                              </div>
+                            {% endif %}
+
+                            {% if section.settings.richtext != blank %}
+                              <div class="grid">
+                                <div class="grid__item large--one-half push--large--one-quarter">
+                                  <div class="homepage-sections--description">{{ section.settings.richtext }}</div>
+                                </div>
+                              </div>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+
+                        {% if section.settings.section-width == 'content' %}
+                          <div class="wrapper content-width"><div class="grid--full"><div class="grid__item">
+                        {% endif %}
+                          <div class="gallery-grid gallery-grid--items-{{ section.blocks.size }} expand-grid{% if section.settings.remove-spacing %} remove-spacing{% else %} keep-spacing{% endif %}{% if no_images %} no-user-images{% endif %} content-position-{{ section.settings.content-position }}{% if section.settings.full-width %} gallery-full-width{% endif %}">
+                            {% for block in section.blocks %}
+                              <div class="homepage-gallery-grid-item homepage-gallery-grid-item--{{ section.settings.content-position }} block-section--{{ block.id }}" {{ block.shopify_attributes }}>
+                                <style>
+                                  .block-section--{{ block.id }} .grid-item-details--background-gradient,
+                                  .block-section--{{ block.id }} .hover-outer .hover-inner::before {
+                                    background: -webkit-linear-gradient(top, {{ block.settings.overlay_color | color_modify: 'alpha', 0.3 }} 0%, {{ block.settings.overlay_color | color_modify: 'alpha', 0.8 }} 75%);
+                                    background: linear-gradient(to bottom, {{ block.settings.overlay_color | color_modify: 'alpha', 0.3 }} 0%, {{ block.settings.overlay_color | color_modify: 'alpha', 0.8 }} 75%);
+                                  }
+
+                                  {% unless section.settings.content-position == 'below-image' %}
+                                    .block-section--{{ block.id }} .grid-item__subheading,
+                                    .block-section--{{ block.id }} .grid-item__title {
+                                      color: {{ block.settings.overlay_font_color }}
+                                    }
+                                  {% endunless %}
+                                </style>
+                                
+                                
+                                <br>
+                                <br>
+
+                                <div class="homepage-gallery-grid-inner{% if section.settings.content-position == 'below-image' %} info-below-image{% endif %}">
+                                  <div class="overflow">
+                                    <div class="grid-image{% if settings.ken_burns_enabled %} kb-enabled{% endif %}">
+                                      {% if block.settings.link != blank %}
+                                        <a href="{{ block.settings.link }}" class="grid-image--centered">
+                                      {% endif %}
+
+                                        {% if block.settings.image == blank %}
+                                          <div class="placeholder-wrap">
+                                            {{ 'image' | placeholder_svg_tag: 'icon icon--placeholder' }}
+                                          </div>
+                                        {% else %}
+                                          {% render 'responsive-image' with block.settings.image, alt: block.settings.image.alt, class: class %}
+                                        {% endif %}
+
+                                      {% if block.settings.link != blank %}
+                                        </a>
+                                      {% endif %}
+                                    </div>
+                                  </div>
+
+                                  {% unless section.settings.content-position == 'hide' %}
+                                    <div class="grid-item-details--{{ section.settings.content-position }}{% if block.settings.show-gradient-overlay and section.settings.content-position != 'below-image' %} grid-item-details--background-gradient{% endif %} full-height">
+                                      {% assign is_link = false %}
+                                      {% if block.settings.link != blank %}
+                                        {% if block.settings.overlay-btn-text == blank %}
+                                          <a href="{{ block.settings.link }}">
+                                        {% endif %}
+                                        {% assign is_link = true %}
+                                      {% endif %}
+
+                                      {% if block.settings.subheading != blank or block.settings.overlay-btn-text != blank or block.settings.title != blank %}
+                                        <div class="grid-item__content">
+                                          {% if block.settings.subheading != blank %}
+                                            <div class="grid-item__subheading">{{ block.settings.subheading }}</div>
+                                          {% endif %}
+
+                                          <div class="grid-item__title">
+                                            <h2>{{ block.settings.title }}</h2>
+                                          </div>
+
+                                          {% if block.settings.overlay-btn-text != blank and is_link == true %}
+                                            <a href="{{ block.settings.link }}" class="homepage-featured-box-btn">{{ block.settings.overlay-btn-text }}</a>
+                                          {% elsif block.settings.overlay-btn-text != blank %}
+                                            <div class="homepage-featured-box-btn">{{ block.settings.overlay-btn-text }}</div>
+                                          {% endif %}
+                                        </div>
+                                      {% endif %}
+
+                                      {% if block.settings.link != blank and block.settings.overlay-btn-text == blank %}
+                                        </a>
+                                      {% endif %}
+                                    </div>
+                                  {% endunless %}
+                                </div>
+                              </div>
+                            {% endfor %}
+
+                            {% if section.blocks.size == 0 %}
+                              <div class="placeholder-noblocks">
+                                {{ 'homepage.onboarding.no_content' | t }}
+                              </div>
+                            {% endif %}
+                          </div>
+
+                        {% if section.settings.section-width == 'content' %}
+                          </div></div></div>
+                        {% endif %}
+                      </div>
+                  {% if section.settings.remove-spacing == false %}
+                    </div>
+                  {% endif %}
+               
+              </div>
+              
+              <div class="grid__item large--five-sixths push--large--one-twelfth homepage-featured-rich-text">
+
+       			{% if section.settings.button_label != blank and section.settings.button_link != blank %}
+				<div>
+					<a href="{{ section.settings.button_link }}" class="homepage-featured-box-btn">
+						{{ section.settings.button_label }}
+					</a>
+				</div>
+			{% endif %}
+
+			 </div>
+              
+		</div>
+	</div>
+</div>
+
+
+
+{% schema %}
+{
+    "name": {
+        "en": "Quality Content",
+        "de": "Quality Content",
+        "es": "Quality Content",
+        "fr": "Quality Content",
+        "pt-PT": "Quality Content"
+    },
+    "class": "rich-text image-gallery-wrapper show-on-scroll",
+    "max_blocks": 3,
+    "settings": [
+		{
+            "type": "image_picker",
+            "id": "banner_image",
+            "label": {
+                "en": "Image",
+                "de": "Bild",
+                "es": "Imagen",
+                "fr": "Image",
+                "pt-PT": "Imagem"
+            },
+            "info": {
+                "en": "Recommended 2000px x 600px",
+                "de": "2000 px x 600 px empfohlen",
+                "es": "Recomendado: 2000px x 600px",
+                "fr": "2000 x 600 px recommandé",
+                "pt-PT": "2000px x 600px (recomendado)"
+            }
+        },
+        {
+            "type": "select",
+            "id": "banner-image-size",
+            "label": {
+                "en": "Image size",
+                "de": "Bildgröße",
+                "es": "Tamaño de la imagen",
+                "fr": "Taille de l'image",
+                "pt-PT": "Tamanho da imagem"
+            },
+            "options": [
+                {
+                    "value": "20vh",
+                    "label": {
+                        "en": "Small",
+                        "de": "Klein",
+                        "es": "Pequeño",
+                        "fr": "Petite",
+                        "pt-PT": "Pequeno"
+                    }
+                },
+                {
+                    "value": "30vh",
+                    "label": {
+                        "en": "Medium",
+                        "de": "Mittel",
+                        "es": "Mediano",
+                        "fr": "Moyenne",
+                        "pt-PT": "Médio"
+                    }
+                },
+                {
+                    "value": "40vh",
+                    "label": {
+                        "en": "Large",
+                        "de": "Groß",
+                        "es": "Grande",
+                        "fr": "Grande",
+                        "pt-PT": "Grande"
+                    }
+                },
+                {
+                    "value": "original",
+                    "label": {
+                        "en": "Original",
+                        "de": "Original",
+                        "es": "Original",
+                        "fr": "D'origine",
+                        "pt-PT": "Original"
+                    }
+                }
+            ],
+            "default": "20vh"
+        },
+        {
+            "type": "checkbox",
+            "id": "parallax",
+            "label": {
+                "en": "Enable parallax effect",
+                "de": "Parallaxeneffekt aktivieren",
+                "es": "Habilitar efecto de paralaje",
+                "fr": "Activer l'effet parallaxe",
+                "pt-PT": "Ativar efeito de paralaxe"
+            },
+            "default": true,
+            "info": {
+                "en": "Parallax won't be visible when the 'Image size' is set to 'Original'",
+                "de": "Parallax wird nicht angezeigt, wenn die 'Bildgröße' auf 'Original' eingestellt ist",
+                "es": "Parallax no estará visible cuando el 'Tamaño de la imagen' esté establecido como 'Original'",
+                "fr": "La parallaxe ne sera pas visible lorsque la 'Taille de l'image' sera réglée sur 'D'origine'.",
+                "pt-PT": "A paralaxe não será visível quando o \"Tamanho da imagem\" estiver definido como \"Original\""
+            }
+        },
+
+        {
+            "type": "text",
+            "id": "page_subtitle",
+            "label": {
+                "en": "Heading",
+                "de": "Überschrift",
+                "es": "Encabezado",
+                "fr": "Rubrique",
+                "pt-PT": "Título"
+            },
+            "default": {
+                "en": "Welcome to our store",
+                "de": "Willkommen in unserem Store",
+                "es": "Bienvenido a nuestra tienda",
+                "fr": "Bienvenue dans notre magasin",
+                "pt-PT": "Bem-vindo/a à nossa loja"
+            }
+        },
+        {
+            "type": "richtext",
+            "id": "page_description",
+            "label": {
+                "en": "Text",
+                "de": "Text",
+                "es": "Texto",
+                "fr": "Texte",
+                "pt-PT": "Texto"
+            },
+            "default": {
+                "en": "<p>Use this text block to introduce your customers to the straußwirtschaft.</p>",
+                "de": "<p>Verwenden Sie diesen Textblock, Besucher in Ihrer Straußwirtschaft willkommen zu heißen.</p>",
+                "es": "<p>Utilice este bloque de texto para mostrar avisos de la tienda, anunciar productos y colecciones o, simplemente, para dar la bienvenida a los visitantes. </p>",
+                "fr": "<p>Utilisez ce bloc de texte pour afficher les annonces en magasin, annoncer des produits et des collections ou simplement accueillir les visiteurs dans votre magasin. </p>",
+                "pt-PT": "<p>Utilize este bloco de texto para exibir anúncios da loja, publicitar produtos e coleções, ou apenas dar as boas-vindas às pessoas que visitam a sua loja.</p>"
+            }
+        },
+        
+  		{
+          "type": "text",
+          "id": "title",
+          "label": {
+              "en": "Heading",
+              "de": "Überschrift",
+              "es": "Encabezado",
+              "fr": "Rubrique",
+              "pt-PT": "Título"
+          }
+        },
+        {
+             "type": "checkbox",
+             "id": "remove-spacing",
+             "default": true,
+             "label": {
+                "en": "Remove spacing",
+                "de":"Abstände entfernen",
+                "es": "Eliminar espacio",
+                "fr": "Supprimer l'espacement",
+                "pt-PT": "Remover o espaçamento"
+             }
+        },
+        {
+          "type": "checkbox",
+          "id": "full-width",
+          "default": false,
+          "label": {
+             "en": "One image per row on mobile",
+             "de":"Ein Foto pro Zeile auf Mobilgerät",
+             "es": "Una imagen por fila en el móvil",
+             "fr": "Une image par ligne sur mobile",
+             "pt-PT": "Uma imagem por linha no telemóvel"
+          }
+        },
+        {
+            "type": "select",
+            "id": "section-width",
+            "label": {
+                "en": "Width",
+                "de": "Breite",
+                "es": "Ancho",
+                "fr": "Largeur",
+                "pt-PT": "Largura"
+            },
+            "default": "full",
+            "options": [
+                {
+                    "value": "full",
+                    "label": {
+                        "en": "Full width",
+                        "de": "Volle Breite",
+                        "es": "Ancho completo",
+                        "fr": "Pleine largeur",
+                        "pt-PT": "Largura total"
+                    }
+                },
+                {
+                    "value": "content",
+                    "label": {
+                        "en": "Content width",
+                        "de": "Abstände entfernen",
+                        "es": "Eliminar espacio",
+                        "fr": "Supprimer l'espacement ",
+                        "pt-PT": "Remover o espaçamento"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "content-position",
+            "label": {
+                "en": "Content position",
+                "de": "Position der Inhalte",
+                "es": "Posición de contenido",
+                "fr": "Position du contenu",
+                "pt-PT": "Posição do conteúdo"
+            },
+            "default": "hide",
+            "options": [
+                {
+                    "value": "hover",
+                    "label": {
+                        "en": "On hover",
+                        "fr": "Beim Drüberfahren",
+                        "de": "Flotante",
+                        "es": "En survol",
+                        "pt-PT": "A pairar"
+                    }
+                },
+                {
+                    "value": "overlay",
+                    "label": {
+                        "en": "Overlay",
+                        "de": "Überlagerung",
+                        "es": "Superposición",
+                        "fr": "Superposé",
+                        "pt-PT": "Sobreposição"
+                    }
+                },
+                {
+                    "value": "below-image",
+                    "label": {
+                        "en": "Below image",
+                        "de": "Unteres Bild",
+                        "es": "Debajo de la imagen",
+                        "fr": "Image ci-dessous",
+                        "pt-PT": "Abaixo da imagem"
+                    }
+                },
+                {
+                    "value": "hide",
+                    "label": {
+                        "en": "Hide",
+                        "de": "Verbergen",
+                        "es": "Ocultar",
+                        "fr": "Cacher",
+                        "pt-PT": "Ocultar"
+                    }
+                }
+            ]
+        },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": {
+                "en": "Button label",
+                "de": "Button-Bezeichnung",
+                "es": "Etiqueta del botón",
+                "fr": "Étiquette du bouton",
+                "pt-PT": "Etiqueta do botão"
+            }
+        },
+        {
+            "type": "url",
+            "id": "button_link",
+            "label": {
+                "en": "Button link",
+                "de": "Buttonlink",
+                "es": "Enlace del botón",
+                "fr": "Lien du bouton",
+                "pt-PT": "Ligação do botão"
+            }
+        }
+    ],
+  "blocks": [
+        {
+            "type": "image",
+            "name": {
+                "en": "Image",
+                "de": "Bild",
+                "es": "Imagen",
+                "fr": "Image",
+                "pt-PT": "Imagem"
+            },
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": {
+                        "en": "Image",
+                        "de": "Bild",
+                        "es": "Imagen",
+                        "fr": "Image",
+                        "pt-PT": "Imagem"
+                    },
+                    "info": {
+                        "en": "We recommend images be cropped to the same size",
+                        "de": "Wir empfehlen, Bilder auf die gleiche Größe zuzuschneiden",
+                        "es": "Recomendamos que las imágenes se recorten al mismo tamaño",
+                        "fr": "Nous recommandons de recadrer les images aux mêmes dimensions",
+                        "pt-PT": "Recomendamos que as imagens sejam recortadas com o mesmo tamanho"
+                    }
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": {
+                "en": "Quality Content",
+                "de": "Quality Content",
+                "es": "Quality Content",
+                "fr": "Quality Content",
+                "pt-PT": "Quality Content"
+            },
+            "category": {
+                "en": "Custom",
+                "de": "Custom",
+                "es": "Custom",
+                "fr": "Custom",
+                "pt-PT": "Custom"
+            },
+  			"blocks": [
+                {
+                    "type": "image"
+                },
+                {
+                    "type": "image"
+                },
+                {
+                    "type": "image"
+                }
+            ]
+        }
+  		
+    ]
+}
+{% endschema %}
+
+

@@ -1,0 +1,116 @@
+{% case section.settings.colors %}
+  {% when 'white' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--white' -%}
+  {% when 'light' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--light' -%}
+  {% when 'accent' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--accent' -%}
+  {% when 'dark' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--dark' -%}
+{% endcase %}
+
+<div
+  class="homepage-sections-wrapper {{ color_scheme }}{% if section.settings.circle_images %} testimonial--circle-images{% endif %}"
+  data-wetheme-section-type="text--testimonials" data-wetheme-section-id="{{ section.id }}"
+>
+
+<div class="wrapper show-on-scroll">
+
+
+  <div class="testimonials-block">
+
+    {% for block in section.blocks %}
+
+      <div class="quality--single-item" {{ block.shopify_attributes }}>
+
+        {% if block.settings.image != blank %}
+          <div class="quality-section--image quality--all-item">
+            {% if section.settings.circle_images %}
+              {% assign crop = 'center' %}
+            {% endif %}
+            {% assign img_alt =  block.settings.image.alt | default: shop.name %}
+            {% render 'responsive-image' with block.settings.image, alt: img_alt | escape crop: 'center', default_size: '100x100', force_height: 100, force_aspect: 1, allow_stretch: true %}
+          </div>
+        {% endif %}
+
+        {% if block.settings.principles_text != blank %}
+          <div class="testimonials--text-wrapper">
+            {{ block.settings.principles_text }}
+          </div>
+        {% endif %}
+
+
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+</div>
+
+{% schema %}
+{
+    "name": {
+        "en": "Quality Principles",
+        "de": "Quality Principles",
+        "es": "Quality Principles",
+        "fr": "Quality Principles",
+        "pt-PT": "Quality Principles"
+    },
+    "class": "homepage-section--testimonials-wrapper",
+    "settings": [
+
+    ],
+    "max_blocks": 8,
+    "blocks": [
+        {
+            "type": "text",
+            "name": {
+                "en": "Testimonial",
+                "de": "Erfahrungsbericht",
+                "es": "Testimonio",
+                "fr": "Témoignage",
+                "pt-PT": "Testemunho"
+            },
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "principles_text",
+                    "label": {
+                        "en": "Text",
+                        "de": "Text",
+                        "es": "Texto",
+                        "fr": "Texte",
+                        "pt-PT": "Texto"
+                    }
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": {
+                "en": "VDP Principles",
+                "de": "VDP Principles",
+                "es": "VDP Principles",
+                "fr": "VDP Principles",
+                "pt-PT": "VDP Principles"
+            },
+            "category": {
+                "en": "Custom",
+                "de": "Custom",
+                "es": "Custom",
+                "fr": "Custom",
+                "pt-PT": "Custom"
+            },
+            "blocks": [
+                {
+                    "type": "text",
+                    "settings": {
+             
+                    }
+				}
+            ]
+        }
+    ]
+}
+{% endschema %}

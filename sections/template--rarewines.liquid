@@ -1,0 +1,573 @@
+<h1 class="page--title">{{ page.title }}</h1>
+
+<div
+    class="homepage-sections-wrapper {{ color_scheme }} {% unless block.settings.text_overlapping_image %} feature-row--no-overlapping{% else %} feature-row--overlapping{% endunless %}{% if block.settings.section-width == 'content' %} content-width{% else %} full-width{% endif %}"
+    data-wetheme-section-type="image--image-with-text" data-wetheme-section-id="{{ section.id }}"
+  >
+    
+    <div class="wrapper show-on-scroll">
+
+	<div class="homepage-indiv-section-wrapper grid--full.homepage-featured-content-wrapper">
+
+		<div class="grid__item large--five-sixths push--large--one-twelfth homepage-featured-rich-text">
+
+			{% if section.settings.text != blank %}
+				<div class="rte featured-row__subtext textarea">{{ section.settings.text }}</div>
+			{% endif %}
+
+			{% if section.settings.button_label != blank and section.settings.button_link != blank %}
+				<div>
+					<a href="{{ section.settings.button_link }}" class="homepage-featured-box-btn">
+						{{ section.settings.button_label }}
+					</a>
+				</div>
+			{% endif %}
+
+		</div>
+
+	</div>
+
+</div>
+  
+  <br>
+  <br>
+
+{% for block in section.blocks %}  
+
+  {% case block.settings.colors %}
+    {% when 'white' %}
+      {%- assign color_scheme = 'homepage-sections-wrapper--white' -%}
+    {% when 'light' %}
+      {%- assign color_scheme = 'homepage-sections-wrapper--light' -%}
+    {% when 'accent' %}
+      {%- assign color_scheme = 'homepage-sections-wrapper--accent' -%}
+    {% when 'dark' %}
+      {%- assign color_scheme = 'homepage-sections-wrapper--dark' -%}
+  {% endcase %}
+ 
+  <div
+    class="row-handle homepage-sections-wrapper {{ color_scheme }} {% unless block.settings.text_overlapping_image %} feature-row--no-overlapping{% else %} feature-row--overlapping{% endunless %}{% if block.settings.section-width == 'content' %} content-width{% else %} full-width{% endif %}"
+    data-wetheme-section-type="image--image-with-text" data-wetheme-section-id="{{ section.id }}"
+  >
+
+    {% capture image_layout %}
+      <div class="grid__item homepage-content--image homepage-content--{{ section.id }}{% if block.settings.text_overlapping_image %} overlapping-text{% else %} large--one-half{% endif %}{% if settings.ken_burns_enabled %} kb-enabled{% endif %}">
+        <div>
+          {% if block.settings.image != blank %}
+            <div id="rellax--{{ section.id }}" class="img" data-rellax-percentage="0.5" data-rellax-speed="-6">
+              {% assign img_alt = block.settings.image.alt | default: shop.name %}
+              {% render 'responsive-image' with block.settings.image, alt: img_alt | escape %}
+            </div>
+          {% else %}
+            <div id="rellax--{{ section.id }}" class="placeholder-background img" data-rellax-percentage="0.5" data-rellax-speed="-6">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'icon icon--placeholder' }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endcapture %}
+
+    {% if block.settings.section-width == 'content' %}
+      <div class="wrapper">
+    {% endif %}
+
+      <div class="row-item homepage-indiv-section-wrapper grid--full homepage-featured-content-wrapper feature-row__text--{{ block.settings.layout }} feature-row__text-alignment--{{ block.settings.text_alignment }}">
+
+        {% if block.settings.layout == 'left' %}
+          {{ image_layout }}
+        {% endif %}
+
+        <div class="grid__item feature_row__image_wrapper{% if block.settings.text_overlapping_image %} homepage-featured-content-box{% else %} large--one-half{% endif %}">
+          {% if block.settings.title != blank or block.settings.text != blank or block.settings.button_label != blank %}
+
+            {% unless block.settings.text_overlapping_image %}
+              <div class="no-overlap-content-box">
+            {% endunless %}
+
+              <div class="homepage-featured-content-box-inner show-on-scroll">
+
+                {% if block.settings.title != blank %}
+                  <div class="sitewide--title-wrapper">
+                    <h2 class="homepage-sections--title">{{ block.settings.title | escape }}</h2>
+                  </div>
+                {% endif %}
+
+                {% if block.settings.text != blank %}
+                  <div class="rte featured-row__subtext textarea">{{ block.settings.text }}</div>
+                {% endif %}
+
+                {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+                  <div class="clearfix">
+                    <a href="{{ block.settings.button_link }}" class="homepage-featured-box-btn">
+                      {{ block.settings.button_label | escape }}
+                    </a>
+                  </div>
+                {% endif %}
+
+              </div>
+
+            {% unless block.settings.text_overlapping_image %}
+              </div>
+            {% endunless %}
+          {% endif %}
+        </div>
+
+        {% if block.settings.layout == 'right' %}
+          {{ image_layout }}
+        {% endif %}
+
+      </div>
+
+    {% if block.settings.section-width == 'content' %}
+      </div>
+    {% endif %}
+
+  </div>
+
+{% endfor %}
+  
+<br>
+<br>
+
+<div
+  class="homepage-sections-wrapper homepage-sections-wrapper--{{ section.settings.colors }}"
+    data-wetheme-section-type="text--rich-text" data-wetheme-section-id="{{ section.id }}"
+>
+
+<div class="wrapper show-on-scroll">
+
+	<div class="homepage-indiv-section-wrapper grid--full.homepage-featured-content-wrapper">
+
+		<div class="grid__item large--five-sixths push--large--one-twelfth homepage-featured-rich-text">
+
+			{% if section.settings.title != blank %}
+				<div class="sitewide--title-wrapper">
+        
+	        <h2 class="homepage-sections--title">{{ section.settings.title | escape }}</h2>
+	      </div>
+          
+			{% endif %}
+			<div class="homepage-featured-box-btn-horizontal">
+			{% if section.settings.button_text_national != blank and section.settings.button_link_national != blank %}
+				
+					<a href="{{ section.settings.button_link_national }}" class="homepage-featured-box-btn homepage-featured-box-btn-horizontal-items">
+						{{ section.settings.button_text_national }}
+					</a>
+				
+			{% endif %}
+
+			{% if section.settings.button_text_international != blank and section.settings.button_link_international != blank %}
+				
+					<a href="{{ section.settings.button_link_international }}" class="homepage-featured-box-btn homepage-featured-box-btn-horizontal-items">
+						{{ section.settings.button_text_international }}
+					</a>
+			
+			{% endif %}
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+</div>
+
+
+{% schema %}
+{
+    "name": {
+        "en": "Rare -Images with text",
+        "de": "Rare -Images with text",
+        "es": "Rare -Images with text",
+        "fr": "Rare -Images with text",
+        "pt-PT": "Rare -Images with text"
+    },
+    "class": "image-with-text-wrapper",
+    "settings": [
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": {
+                "en": "Text",
+                "de": "Text",
+                "es": "Texto",
+                "fr": "Texte",
+                "pt-PT": "Texto"
+            },
+            "default": {
+                "en": "<p>Use this text block to show store announcements, advertise products and collections, or simply welcome visitors to your store.</p>",
+                "de": "<p>Verwenden Sie diesen Textblock, um Ankündigungen zu zeigen, Produkte und Kollektionen zu bewerben oder einfach Besucher in Ihrem Store willkommen zu heißen.</p>",
+                "es": "<p>Utilice este bloque de texto para mostrar avisos de la tienda, anunciar productos y colecciones o, simplemente, para dar la bienvenida a los visitantes. </p>",
+                "fr": "<p>Utilisez ce bloc de texte pour afficher les annonces en magasin, annoncer des produits et des collections ou simplement accueillir les visiteurs dans votre magasin. </p>",
+                "pt-PT": "<p>Utilize este bloco de texto para exibir anúncios da loja, publicitar produtos e coleções, ou apenas dar as boas-vindas às pessoas que visitam a sua loja.</p>"
+            }
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": {
+                "en": "Heading",
+                "de": "Überschrift",
+                "es": "Encabezado",
+                "fr": "Rubrique",
+                "pt-PT": "Título"
+            },
+            "default": {
+                "en": "Preislisten",
+                "de": "Preislisten",
+                "es": "Preislisten",
+                "fr": "Preislisten",
+                "pt-PT": "Preislisten"
+            }
+        },
+        {
+            "type": "text",
+            "id": "button_text_national",
+            "label": {
+                "en": "Button label",
+                "de": "Button-Bezeichnung",
+                "es": "Etiqueta del botón",
+                "fr": "Étiquette du bouton",
+                "pt-PT": "Etiqueta do botão"
+            }
+        },
+        {
+            "type": "url",
+            "id": "button_link_national",
+            "label": {
+                "en": "Button link",
+                "de": "Buttonlink",
+                "es": "Enlace del botón",
+                "fr": "Lien du bouton",
+                "pt-PT": "Ligação do botão"
+            }
+        },
+        {
+            "type": "text",
+            "id": "button_text_international",
+            "label": {
+                "en": "Button label",
+                "de": "Button-Bezeichnung",
+                "es": "Etiqueta del botón",
+                "fr": "Étiquette du bouton",
+                "pt-PT": "Etiqueta do botão"
+            }
+        },
+        {
+            "type": "url",
+            "id": "button_link_international",
+            "label": {
+                "en": "Button link",
+                "de": "Buttonlink",
+                "es": "Enlace del botón",
+                "fr": "Lien du bouton",
+                "pt-PT": "Ligação do botão"
+            }
+        }
+
+    ],
+    "blocks": [
+      {
+        "type": "select",
+        "name": "Image with Text",
+        "settings": [
+			{
+            "type": "select",
+            "id": "colors",
+            "label": {
+                "en": "Color scheme",
+                "de": "Farbschema",
+                "es": "Esquema de colores",
+                "fr": "Palette de couleurs",
+                "pt-PT": "Esquema de cores"
+            },
+            "default": "light",
+            "options": [
+                {
+                    "value": "white",
+                    "label": {
+                        "en": "Minimal",
+                        "fr": "Minimal",
+                        "de": "Minimal",
+                        "es": "Mínimo",
+                        "pt-PT": "Mínimo"
+                    }
+                },
+                {
+                    "value": "light",
+                    "label": {
+                        "en": "Light",
+                        "de": "Licht",
+                        "es": "Luz",
+                        "fr": "Clair",
+                        "pt-PT": "Claro"
+                    }
+                },
+                {
+                    "value": "accent",
+                    "label": {
+                        "en": "Feature",
+                        "de": "Eigenschaft",
+                        "es": "Destacado",
+                        "fr": "Caractéristique",
+                        "pt-PT": "Funcionalidade"
+                    }
+                },
+                {
+                    "value": "dark",
+                    "label": {
+                        "en": "Dark",
+                        "de": "Dunkel",
+                        "es": "Oscuro",
+                        "fr": "Foncé",
+                        "pt-PT": "Escuro"
+                    }
+                }
+            ]
+        },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": {
+                "en": "Image",
+                "de": "Bild",
+                "es": "Imagen",
+                "fr": "Image",
+                "pt-PT": "Imagem"
+            },
+            "info": {
+                "en": "Minimum recommended dimensions 1000px wide, 750px high",
+                "de": "Empfohlene Mindestabmessungen: 1000px breit, 750px hoch",
+                "es": "Dimensiones mínimas recomendadas de 1000 píxeles de ancho, 750 píxeles de alto",
+                "fr": "Dimensions minimales recommandées : 1 000 pixels en largeur, 750 pixels en hauteur",
+                "pt-PT": "Dimensões mínimas recomendadas 1000px de largura, 750px de altura"
+            }
+        },
+        {
+            "type": "checkbox",
+            "id": "text_overlapping_image",
+            "label": {
+                "en": "Text overlapping image",
+                "de": "Text überlappt das Bild",
+                "es": "Texto superpuesto sobre imagen",
+                "fr": "Texte chevauchant l'image",
+                "pt-PT": "O texto sobrepõe-se à imagem"
+            },
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "section-width",
+            "label": {
+                "en": "Width",
+                "de": "Breite",
+                "es": "Ancho",
+                "fr": "Largeur",
+                "pt-PT": "Largura"
+            },
+            "default": "full",
+            "options": [
+                {
+                    "value": "full",
+                    "label": {
+                        "en": "Full width",
+                        "de": "Volle Breite",
+                        "es": "Ancho completo",
+                        "fr": "Pleine largeur",
+                        "pt-PT": "Largura total"
+                    }
+                },
+                {
+                    "value": "content",
+                    "label": {
+                        "en": "Content width",
+                        "de": "Abstände entfernen",
+                        "es": "Eliminar espacio",
+                        "fr": "Supprimer l'espacement ",
+                        "pt-PT": "Remover o espaçamento"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "layout",
+            "label": {
+                "en": "Layout",
+                "de": "Layout",
+                "es": "Diseño",
+                "fr": "Mise en page",
+                "pt-PT": "Apresentação"
+            },
+            "default": "left",
+            "options": [
+                {
+                    "value": "left",
+                    "label": {
+                        "en": "Image on left",
+                        "de": "Bild links",
+                        "es": "Imagen a la izquierda",
+                        "fr": "Image à gauche",
+                        "pt-PT": "Imagem à esquerda"
+                    }
+                },
+                {
+                    "value": "right",
+                    "label": {
+                        "en": "Image on right",
+                        "de": "Bild rechts",
+                        "es": "Imagen a la derecha",
+                        "fr": "Image à droite",
+                        "pt-PT": "Imagem à direita"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "text_alignment",
+            "label": {
+                "en": "Text alignment on desktop",
+                "de": "Textausrichtung auf dem Desktop",
+                "es": "Alineación del texto en escritorio",
+                "fr": "Alignement du texte sur le bureau",
+                "pt-PT": "Alinhamento de texto no ambiente de trabalho"
+            },
+            "default": "center",
+            "options": [
+                {
+                    "value": "left",
+                    "label": {
+                        "en": "Left",
+                        "de": "Links",
+                        "es": "Izquierda",
+                        "fr": "Gauche",
+                        "pt-PT": "Esquerda"
+                    }
+                },
+                {
+                    "value": "center",
+                    "label": {
+                        "en": "Centered",
+                        "de": "Zentriert",
+                        "es": "Centrado",
+                        "fr": "Centré",
+                        "pt-PT": "Centrado"
+                    }
+                },
+                {
+                    "value": "right",
+                    "label": {
+                        "en": "Right",
+                        "de": "Rechts",
+                        "es": "Derecha",
+                        "fr": "Droite",
+                        "pt-PT": "Direita"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": {
+                "en": "Heading",
+                "de": "Überschrift",
+                "es": "Encabezado",
+                "fr": "Rubrique",
+                "pt-PT": "Título"
+            },
+            "default": {
+                "en": "Share brand or product details",
+                "de": "Marken- oder Produktdetails teilen",
+                "es": "Compartir marca o detalles del producto",
+                "fr": "Partager les infos sur la marque ou le produit",
+                "pt-PT": "Partilhar detalhes da marca ou produto"
+            }
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": {
+                "en": "Text",
+                "de": "Text",
+                "es": "Texto",
+                "fr": "Texte",
+                "pt-PT": "Texto"
+            },
+            "default": {
+                "en": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "de": "<p>Fügen Sie langen Texten ein Bild hinzu, um dem Produkt, der Kollektion oder dem Blogpost Ihrer Wahl Fokus zu verleihen. Fügen Sie Details bezüglich der Verfügbarkeit oder dem Stil hinzu oder stellen Sie sogar eine Rezension zur Verfügung.</p>",
+                "es": "<p> Combine texto grande con una imagen para focalizar la atención en su producto, colección o publicación del blog. Añada detalles sobre la disponibilidad, el estilo o, incluso, un comentario. </p>",
+                "fr": "<p>Associez un texte en gros caractères à une image pour mettre en valeur le produit, la collection ou l'article de blog que vous avez choisi. Ajoutez des détails sur la disponibilité et le style ou même fournissez un commentaire.</p>",
+                "pt-PT": "<p>Associe um texto de grandes dimensões a uma imagem para destacar o seu produto, coleção ou publicação no blog de eleição. Acrescente detalhes relativos à disponibilidade, estilo, ou até mesmo uma opinião.</p>"
+            }
+        },
+        {
+            "type": "text",
+            "id": "button_label",
+            "label": {
+                "en": "Button label",
+                "de": "Button-Bezeichnung",
+                "es": "Etiqueta del botón",
+                "fr": "Étiquette du bouton",
+                "pt-PT": "Etiqueta do botão"
+            }
+        },
+        {
+            "type": "url",
+            "id": "button_link",
+            "label": {
+                "en": "Button link",
+                "de": "Buttonlink",
+                "es": "Enlace del botón",
+                "fr": "Lien du bouton",
+                "pt-PT": "Ligação do botão"
+            }
+        }
+        ]
+      }
+    ],
+    "presets": [
+        {
+            "name": {
+                "en": "Rare - Image with text",
+                "de": "Rare - Image with text",
+                "es": "Rare - Image with text",
+                "fr": "Rare - Image with text",
+                "pt-PT": "Rare - Image with text"
+            },
+            "category": {
+                "en": "Image",
+                "de": "Bild",
+                "es": "Imagen",
+                "fr": "Image",
+                "pt-PT": "Imagem"
+            },
+            "blocks": [
+        		{
+            		"type": "select"
+				}
+            ]
+        },
+        {
+            "name": {
+                "en": "Raritäten",
+                "de": "Raritäten",
+                "es": "Raritäten",
+                "fr": "Raritäten",
+                "pt-PT": "Raritäten"
+            },
+            "category": {
+                "en": "Custom",
+                "de": "Custom",
+                "es": "Custom",
+                "fr": "Custom",
+                "pt-PT": "Custom"
+            }
+        }
+    ]
+}
+
+
+{% endschema %}

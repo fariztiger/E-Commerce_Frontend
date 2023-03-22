@@ -1,0 +1,298 @@
+{% capture textalignment %}
+    {% case section.settings.textAlignment %}
+    {% when 'top-left' %}
+        text-align-top-left
+    {% when 'top-center' %}
+        text-align-top-center
+    {% when 'top-right' %}
+        text-align-top-right
+    {% when 'center-left' %}
+        text-align-center-left
+    {% when 'center' %}
+        text-align-center
+    {% when 'center-right' %}
+        text-align-center-right
+    {% when 'bottom-left' %}
+        text-align-bottom-left
+    {% when 'bottom-center' %}
+        text-align-bottom-center
+    {% when 'bottom-right' %}
+        text-align-bottom-right
+    {% endcase %}
+{% endcapture %}
+
+{% capture desktopheight %}
+    {% case section.settings.desktopHeight %}
+    {% when '450' %}
+        desktop-height-450
+    {% when '550' %}
+        desktop-height-550
+    {% when '650' %}
+        desktop-height-650
+    {% when '750' %}
+        desktop-height-750
+    {% when 'fullscreen' %}
+        desktop-height-fullscreen
+    {% endcase %}
+{% endcapture %}
+
+{% capture mobileheight %}
+    {% case section.settings.mobileHeight %}
+    {% when '250' %}
+        mobile-height-250
+    {% when '350' %}
+        mobile-height-350
+    {% when '450' %}
+        mobile-height-450
+    {% when '550' %}
+        mobile-height-550
+    {% when 'fullscreen' %}
+        mobile-height-fullscreen
+    {% when 'fit' %}
+        mobile-height-fit
+    {% endcase %}
+{% endcapture %}
+
+{% capture isplaceholder %}
+    {% if section.settings.url contains "watch?v=_9VUPq3SxOc" %}
+        is-placeholder
+    {% endif %}
+{% endcapture %}
+
+{% capture media_icon %}
+    <svg viewBox="0 0 61 61">
+        <rect x="0.5" y="0.5" width="60" height="60" fill="none" stroke="currentColor" stroke-opacity="0.05" stroke-miterlimit="10"/>
+        <path d="M25,21.39a1,1,0,0,0-1.51.86V38.64a1,1,0,0,0,1.55.83l13.11-8.67a1,1,0,0,0,0-1.7Z" fill="currentColor"/>
+    </svg>
+{% endcapture %}
+
+<div
+  class="homepage-sections-wrapper homepage-content--{{ section.id }} hero-video {{ desktopheight | strip }} {{ mobileheight | strip }} {{ isplaceholder | strip }}"
+  data-wetheme-section-type="video--video-hero" data-wetheme-section-id="{{ section.id }}"
+>
+    <div class="hero-video--wrapper">
+        {% assign type = 'mp4' %}
+        {% if section.settings.url contains "youtube.com" %}
+          {% assign type = 'youtube' %}
+        {% elsif section.settings.url contains "youtu.be" %}
+          {% assign type = 'youtube' %}
+        {% elsif section.settings.url contains "vimeo.com" %}
+          {% assign type = 'vimeo' %}
+        {% endif %}
+        <div class="hero-video--media type-{{ type }}">
+          <wetheme-video
+            section-id="{{ section.id }}"
+            v-bind:hero="true"
+            video-type="{{ type }}"
+            url="{{ section.settings.url }}"
+            v-bind:autoplay="true"
+            v-bind:loop="true"
+            v-bind:mute="true"
+            v-bind:hide-controls="true"
+            v-bind:overlay="false"
+          >
+          </wetheme-video>
+        </div>
+    </div>
+</div>
+
+
+{% schema %}
+{
+    "name": {
+        "en": "Quality Video hero",
+        "de": "Qualität Video-Held",
+        "es": "Quality Vídeo principal",
+        "fr": "Quality Héros vidéo",
+        "pt-PT": "Quality Video hero"
+    },
+    "class": "video-hero-wrapper show-on-scroll",
+    "settings": [
+        {
+            "type": "header",
+            "content": {
+                "en": "Video",
+                "de": "Video",
+                "es": "Vídeo",
+                "fr": "Vidéo",
+                "pt-PT": "Vídeo"
+            }
+        },
+        {
+            "id": "url",
+            "type": "text",
+            "label": {
+                "en": "Video URL",
+                "de": "Video-URL",
+                "es": "URL del vídeo",
+                "fr": "URL de la vidéo",
+                "pt-PT": "URL do Vídeo"
+            },
+            "info": {
+                "en": "Accepts YouTube, Vimeo and MP4. Video will be muted and some devices may prevent autoplay. [Learn more](https://flowdocs.wetheme.com/sections/video/video-hero)",
+                "de": "Akzeptiert YouTube, Vimeo und MP4. Das Video wird stumm geschaltet, und einige Geräte verhindern möglicherweise die automatische Wiedergabe. [Mehr erfahren](https://flowdocs.wetheme.com/sections/video/video-hero)",
+                "es": "Acepta YouTube, Vimeo y MP4. El vídeo se silenciará y algunos dispositivos pueden evitar la reproducción automática. [Más información](https://flowdocs.wetheme.com/sections/video/video-hero)",
+                "fr": "Accepte YouTube, Vimeo et MP4. Le son de la vidéo sera désactivé et certains appareils peuvent empêcher la lecture automatique. [En savoir plus](https://flowdocs.wetheme.com/sections/video/video-hero)",
+                "pt-PT": "Aceita YouTube, Vimeo e MP4. O vídeo será silenciado e alguns dispositivos podem impedir a reprodução automática. [Saber mais](https://flowdocs.wetheme.com/sections/video/video-hero)"
+            },
+            "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        },
+        {
+            "type": "select",
+            "id": "desktopHeight",
+            "label": {
+              "en": "Section height",
+              "de": "Abschnitthöhe",
+              "es": "Altura de la sección",
+              "fr": "Hauteur de section",
+              "pt-PT": "Altura da secção"
+            },
+            "default": "fullscreen",
+            "options": [
+                {
+                    "value": "fullscreen",
+                    "label": {
+                        "en": "Fullscreen",
+                        "de": "Vollbild",
+                        "es": "Pantalla completa",
+                        "fr": "Plein écran",
+                        "pt-PT": "Ecrã inteiro"
+                    }
+                },
+                {
+                    "value": "450",
+                    "label": {
+                        "en": "Small",
+                        "de": "Klein",
+                        "es": "Pequeño",
+                        "fr": "Petite",
+                        "pt-PT": "Pequeno"
+                    }
+                },
+                {
+                    "value": "550",
+                    "label": {
+                        "en": "Medium",
+                        "de": "Mittel",
+                        "es": "Mediano",
+                        "fr": "Moyenne",
+                        "pt-PT": "Médio"
+                    }
+                },
+                {
+                    "value": "650",
+                    "label": {
+                        "en": "Large",
+                        "de": "Groß",
+                        "es": "Grande",
+                        "fr": "Grande",
+                        "pt-PT": "Grande"
+                    }
+                },
+                {
+                    "value": "750",
+                    "label": {
+                        "en": "Extra Large",
+                        "de": "Extra groß",
+                        "es": "Muy grande",
+                        "fr": "Extra grande",
+                        "pt-PT": "Extra Grande"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "mobileHeight",
+            "label": {
+                "en": "Mobile section height",
+                "de": "Höhe des beweglichen Teils",
+                "es": "Altura de la sección móvil",
+                "fr": "Hauteur de la section mobile",
+                "pt-PT": "Altura da secção móvel"
+            },
+            "default": "fullscreen",
+            "options": [
+                {
+                    "value": "fullscreen",
+                    "label": {
+                        "en": "Fullscreen",
+                        "de": "Vollbild",
+                        "es": "Pantalla completa",
+                        "fr": "Plein écran",
+                        "pt-PT": "Ecrã inteiro"
+                    }
+                },
+                {
+                    "value": "fit",
+                    "label": {
+                        "en": "Fit to screen width",
+                        "de": "An Bildschirmbreite anpassen",
+                        "es": "Ajustar al ancho de la pantalla",
+                        "fr": "Ajuster à la largeur de l'écran",
+                        "pt-PT": "Ajustar à largura do ecrã"
+                    }
+                },
+                {
+                    "value": "250",
+                    "label": {
+                        "en": "Small",
+                        "de": "Klein",
+                        "es": "Pequeño",
+                        "fr": "Petite",
+                        "pt-PT": "Pequeno"
+                    }
+                },
+                {
+                    "value": "350",
+                    "label": {
+                        "en": "Medium",
+                        "de": "Mittel",
+                        "es": "Mediano",
+                        "fr": "Moyenne",
+                        "pt-PT": "Médio"
+                    }
+                },
+                {
+                    "value": "450",
+                    "label": {
+                        "en": "Large",
+                        "de": "Groß",
+                        "es": "Grande",
+                        "fr": "Grande",
+                        "pt-PT": "Grande"
+                    }
+                },
+                {
+                    "value": "550",
+                    "label": {
+                        "en": "Extra large",
+                        "de": "Extra groß",
+                        "es": "Muy grande",
+                        "fr": "Extra grande",
+                        "pt-PT": "Extra Grande"
+                    }
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": {
+                "en": "Quality Video hero",
+                "de": "Qualität Video-Held",
+                "es": "Quality Vídeo principal",
+                "fr": "Quality Héros vidéo",
+                "pt-PT": "Quality Video hero"
+            },
+            "category": {
+                "en": "Video",
+                "de": "Video",
+                "es": "Vídeo",
+                "fr": "Vidéo",
+                "pt-PT": "Vídeo"
+            }
+        }
+    ]
+}
+{% endschema %}

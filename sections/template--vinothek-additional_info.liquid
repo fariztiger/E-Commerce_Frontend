@@ -1,0 +1,218 @@
+{% case section.settings.colors %}
+  {% when 'white' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--white' -%}
+  {% when 'light' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--light' -%}
+  {% when 'accent' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--accent' -%}
+  {% when 'dark' %}
+    {%- assign color_scheme = 'homepage-sections-wrapper--dark' -%}
+{% endcase %}
+
+    <br>
+<div
+  class="homepage-sections-wrapper homepage-sections-wrapper--{{ section.settings.colors }}"
+    data-wetheme-section-type="text--rich-text" data-wetheme-section-id="{{ section.id }}"
+>
+
+<div class="wrapper show-on-scroll">
+
+	<div class="homepage-indiv-section-wrapper grid--full.homepage-featured-content-wrapper">
+
+		<div class="grid__item large--five-sixths push--large--one-twelfth homepage-featured-rich-text">
+
+			{% if section.settings.opening_title != blank %}
+				<div class="sitewide--title-wrapper">
+        
+	        <h2 class="homepage-sections--title">{{ section.settings.opening_title | escape }}</h2>
+	      </div>
+			{% endif %}
+
+			{% if section.settings.opening_description != blank %}
+				<div class="rte featured-row__subtext textarea">{{ section.settings.opening_description }}</div>
+			{% endif %}
+          
+          	{% if section.settings.consulting_title != blank %}
+          
+          <br>
+      
+				<div class="sitewide--title-wrapper">
+        
+	        <h2 class="homepage-sections--title">{{ section.settings.consulting_title | escape }}</h2>
+	      </div>
+			{% endif %}
+
+			{% if section.settings.consulting_description != blank %}
+				<div class="rte featured-row__subtext textarea">{{ section.settings.consulting_description }}</div>
+			{% endif %}
+
+
+		</div>
+
+	</div>
+
+</div>
+
+</div>
+
+
+{% schema %}
+{
+    "name": {
+        "en": "Additional infos",
+        "de": "Additional infos",
+        "es": "Additional infos",
+        "fr": "Additional infos",
+        "pt-PT": "Additional infos"
+    },
+    "class": "homepage-section--testimonials-wrapper",
+    "settings": [
+        {
+            "type": "select",
+            "id": "colors",
+            "label": {
+                "en": "Color scheme",
+                "de": "Farbschema",
+                "es": "Esquema de colores",
+                "fr": "Palette de couleurs",
+                "pt-PT": "Esquema de cores"
+            },
+            "default": "white",
+            "options": [
+                {
+                    "value": "white",
+                    "label": {
+                        "en": "Minimal",
+                        "fr": "Minimal",
+                        "de": "Minimal",
+                        "es": "Mínimo",
+                        "pt-PT": "Mínimo"
+                    }
+                },
+                {
+                    "value": "light",
+                    "label": {
+                        "en": "Light",
+                        "de": "Licht",
+                        "es": "Luz",
+                        "fr": "Clair",
+                        "pt-PT": "Claro"
+                    }
+                },
+                {
+                    "value": "accent",
+                    "label": {
+                        "en": "Feature",
+                        "de": "Eigenschaft",
+                        "es": "Destacado",
+                        "fr": "Caractéristique",
+                        "pt-PT": "Funcionalidade"
+                    }
+                },
+                {
+                    "value": "dark",
+                    "label": {
+                        "en": "Dark",
+                        "de": "Dunkel",
+                        "es": "Oscuro",
+                        "fr": "Foncé",
+                        "pt-PT": "Escuro"
+                    }
+                }
+            ]
+        },
+
+          {
+            "type": "text",
+            "id": "opening_title",
+            "label": {
+                "en": "Heading",
+                "de": "Überschrift",
+                "es": "Encabezado",
+                "fr": "Rubrique",
+                "pt-PT": "Título"
+            },
+            "default": {
+                "en": "Welcome to our store",
+                "de": "Willkommen in unserem Store",
+                "es": "Bienvenido a nuestra tienda",
+                "fr": "Bienvenue dans notre magasin",
+                "pt-PT": "Bem-vindo/a à nossa loja"
+            }
+        },
+        {
+            "type": "richtext",
+            "id": "opening_description",
+            "label": {
+                "en": "Text",
+                "de": "Text",
+                "es": "Texto",
+                "fr": "Texte",
+                "pt-PT": "Texto"
+            },
+            "default": {
+                "en": "<p>Use this text block to describe the opening times of your store</p>",
+                "de": "<p>Verwenden Sie diesen Textblock, um die Öffnungszeiten zu beschreiben.</p>",
+                "es": "<p>Utilice este bloque de texto para mostrar avisos de la tienda, anunciar productos y colecciones o, simplemente, para dar la bienvenida a los visitantes. </p>",
+                "fr": "<p>Utilisez ce bloc de texte pour afficher les annonces en magasin, annoncer des produits et des collections ou simplement accueillir les visiteurs dans votre magasin. </p>",
+                "pt-PT": "<p>Utilize este bloco de texto para exibir anúncios da loja, publicitar produtos e coleções, ou apenas dar as boas-vindas às pessoas que visitam a sua loja.</p>"
+            }
+        },
+            {
+            "type": "text",
+            "id": "consulting_title",
+            "label": {
+                "en": "Heading",
+                "de": "Überschrift",
+                "es": "Encabezado",
+                "fr": "Rubrique",
+                "pt-PT": "Título"
+            },
+            "default": {
+                "en": "Welcome to our store",
+                "de": "Willkommen in unserem Store",
+                "es": "Bienvenido a nuestra tienda",
+                "fr": "Bienvenue dans notre magasin",
+                "pt-PT": "Bem-vindo/a à nossa loja"
+            }
+        },
+        {
+            "type": "richtext",
+            "id": "consulting_description",
+            "label": {
+                "en": "Text",
+                "de": "Text",
+                "es": "Texto",
+                "fr": "Texte",
+                "pt-PT": "Texto"
+            },
+            "default": {
+                "en": "<p>Use this text block to describe the opening times of your store</p>",
+                "de": "<p>Verwenden Sie diesen Textblock, um die Öffnungszeiten zu beschreiben.</p>",
+                "es": "<p>Utilice este bloque de texto para mostrar avisos de la tienda, anunciar productos y colecciones o, simplemente, para dar la bienvenida a los visitantes. </p>",
+                "fr": "<p>Utilisez ce bloc de texte pour afficher les annonces en magasin, annoncer des produits et des collections ou simplement accueillir les visiteurs dans votre magasin. </p>",
+                "pt-PT": "<p>Utilize este bloco de texto para exibir anúncios da loja, publicitar produtos e coleções, ou apenas dar as boas-vindas às pessoas que visitam a sua loja.</p>"
+            }
+        }
+    ],
+    "presets": [
+        {
+            "name": {
+                "en": "Vino - Additional info",
+                "de": "Vino - Additional info",
+                "es": "Vino - Additional info",
+                "fr": "Vino - Additional info",
+                "pt-PT": "Vino - Additional info"
+            },
+            "category": {
+                "en": "Text",
+                "de": "Text",
+                "es": "Texto",
+                "fr": "Texte",
+                "pt-PT": "Texto"
+            }
+            
+        }
+    ]
+}
+{% endschema %}
